@@ -8,18 +8,22 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #263343;
+    background-color: white;
     padding: 8px 12px;
 }
 
 
 .navbar__logo{
-    font-size: 24px;
-    color: white;
+    
+    font-size: 1.3rem;
+    color: black;
 }
 
-.navbar__logo i {
-    color:#d49466;
+.navbar__logo a {
+    padding-left: 8px;
+    color: black;
+    font-family: 'Poppins';
+    font-weight: 500;
 }
 
 .navbar__menu {
@@ -32,9 +36,12 @@ a {
     padding: 8px 12px;
 }
 
-.navbar__menu li:hover {
-    background-color: #d49466;
-    border-radius: 4px;
+.navbar__menu li a {
+    color: #5f5f79;
+}
+
+.navbar__menu li a:hover {
+    color:coral;
 }
 
 .navbar__icons {
@@ -46,6 +53,7 @@ a {
 
 .navbar__icons li{
     padding: 8px 12px;
+    color: #5f5f79;
 }
 
 .navbar__toggleBtn{

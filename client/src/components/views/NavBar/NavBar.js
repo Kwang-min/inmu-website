@@ -1,8 +1,8 @@
 import React,{ useRef } from 'react'
 import './NavBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAccusoft, faInstagram, faTwitter,faFacebookF } from '@fortawesome/free-brands-svg-icons'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons'
+import { faBars, faDrum } from '@fortawesome/free-solid-svg-icons'
 
 
 function NavBar() {
@@ -19,8 +19,8 @@ function NavBar() {
         <>
             <nav className="navbar">
                 <div className="navbar__logo">
-                    <FontAwesomeIcon icon={faAccusoft} />
-                    <a href="">DreamCoding</a>
+                    <FontAwesomeIcon icon={faDrum} />
+                    <a href="">인생뮤직</a>
                 </div>
                 <ul ref={navbarMenu} className="navbar__menu">
                     <li><a href="">Home</a></li>
