@@ -1,5 +1,7 @@
 import React,{ useRef } from 'react'
 import './NavBar.css'
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import { faBars, faDrum } from '@fortawesome/free-solid-svg-icons'
@@ -20,14 +22,14 @@ function NavBar() {
             <nav className="navbar">
                 <div className="navbar__logo">
                     <FontAwesomeIcon icon={faDrum} />
-                    <a href="">인생뮤직</a>
+                    <Link to="/">인생뮤직</Link>
                 </div>
                 <ul ref={navbarMenu} className="navbar__menu">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Gallery</a></li>
-                    <li><a href="">Wedding</a></li>
-                    <li><a href="">FAQ</a></li>
-                    <li><a href="">Bookings</a></li>
+                    <li><Link to="/">학원소개</Link></li>
+                    <li><Link to="/videoList">연주영상</Link></li>
+                    <li><Link to="/">게시판</Link></li>
+                    <li><Link to="/login">로그인</Link></li>
+                    <li><Link to="/register">회원가입</Link></li>
                 </ul>
                 <ul ref={navbarIcons} className="navbar__icons">
                     <li><FontAwesomeIcon icon={faInstagram} /></li>
