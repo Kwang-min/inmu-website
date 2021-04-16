@@ -1,17 +1,12 @@
 import React,{ useState,useEffect } from 'react'
-import { Typography, Button, Form, Message, Input, message } from 'antd';
 import Dropzone from 'react-dropzone'
 import Axios from 'axios'
 import { PlusOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 
-
-const { TextArea } = Input;
-const { Title } = Typography;
-
 const PrivateOptions = [
-    {value: 0, label: "Private" },
-    {value: 1, label: "Public"}
+    {value: 1, label: "공개"},
+    {value: 0, label: "비공개" },
 ]
 
 const CategoryOptions = [
@@ -24,10 +19,16 @@ const CategoryOptions = [
 function VideoUploadPage(props) {
 
     useEffect(() => {
+        
         Axios.get('/api/users/auth')
-            .then((response) => {
+        .then(response => {
+            if(response.data.isAuth) {
                 setUser(response.data)
-            })
+            } else {
+                alert('회원정보를 가져오는 데 실패했습니다')
+            }
+        })
+        
     }, [])
 
     const [user, setUser] = useState('')
@@ -110,7 +111,7 @@ function VideoUploadPage(props) {
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {
                 if(response.data.success) {
-                    message.success('성공적으로 업로드를 했습니다')
+                    alert('성공적으로 업로드를 했습니다')
                     setTimeout(() => {
                         props.history.push('/')
                     }, 3000);
@@ -123,10 +124,10 @@ function VideoUploadPage(props) {
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <Title level={2}>Upload Video</Title>
+                <h2>Upload Video</h2>
             </div>
 
-            <Form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
                 <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                         {/* Drop Zone */}
                         <Dropzone
@@ -157,14 +158,14 @@ function VideoUploadPage(props) {
                 <br />
                 <br />
                     <label>Title</label>
-                    <Input
+                    <input
                         onChange={onTitleChange}
                         value={VideoTitle}
                     />
                     <br />
                     <br />
                     <label>Description</label>
-                    <TextArea
+                    <textarea
                         onChange={onDescriptionChange}
                         value={Description}
                     />
@@ -192,13 +193,13 @@ function VideoUploadPage(props) {
                     <br />
                     <br />
 
-                    <Button type="primary" size="large" onClick={onSubmit}>
+                    <button onClick={onSubmit}>
                         Submit
-                    </Button>
+                    </button>
 
 
 
-            </Form>
+            </form>
 
        
 

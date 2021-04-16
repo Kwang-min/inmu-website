@@ -16,13 +16,16 @@ import RegisterPage from './views/RegisterPage/RegisterPage';
 import VideoMainPage from './views/VideoMainPage/VideoMainPage';
 import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage';
 import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage';
+import BoardMainPage from './views/BoardMainPage/BoardMainPage';
+import BoardCreatePage from './views/BoardCreatePage/BoardCreatePage';
+import BoardDetailPage from './views/BoardDetailPage/BoardDetailPage';
 
 function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
         <Router>
           <NavBar />
-          <div style={{ paddingTop: '69px', minHeight: '100vh' }}>
+          <div style={{ paddingTop: '2rem', minHeight: '100vh' }}>
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>
@@ -32,6 +35,9 @@ function App() {
               <Route exact path="/videoList" component = {Auth(VideoMainPage, null)} />
               <Route exact path="/video/upload" component = {Auth(VideoUploadPage, true)} />
               <Route exact path="/video/:videoId" component = {Auth(VideoDetailPage, null)} />
+              <Route exact path="/boardList" component = {Auth(BoardMainPage, null)} />
+              <Route exact path="/board/create" component = {Auth(BoardCreatePage, true)} />
+              <Route exact path="/board/post/:postId" component = {Auth(BoardDetailPage, null)} />
             </Switch>
           </div>
         </Router>

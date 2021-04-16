@@ -27,7 +27,7 @@ function NavBar() {
                 <ul ref={navbarMenu} className="navbar__menu">
                     <li><Link to="/">학원소개</Link></li>
                     <li><Link to="/videoList">연주영상</Link></li>
-                    <li><Link to="/">게시판</Link></li>
+                    <li><Link to="/boardList">게시판</Link></li>
                     <li><Link to="/login">로그인</Link></li>
                     <li><Link to="/register">회원가입</Link></li>
                 </ul>
