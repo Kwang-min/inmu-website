@@ -25,7 +25,7 @@ function App() {
     <Suspense fallback={(<div>Loading...</div>)}>
         <Router>
           <NavBar />
-          <div style={{ paddingTop: '2rem', minHeight: '100vh' }}>
+          <div style={{ minHeight: '100vh' }}>
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>

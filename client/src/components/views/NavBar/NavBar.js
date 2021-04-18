@@ -5,16 +5,19 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import { faBars, faDrum } from '@fortawesome/free-solid-svg-icons'
+import LoginMenus from './Sections/LoginMenus';
 
 
 function NavBar() {
 
     const navbarMenu = useRef();
     const navbarIcons = useRef();
+    const navbarloginMenus = useRef();
 
     const toggleButton = () => {
         navbarMenu.current.classList.toggle('active')
         navbarIcons.current.classList.toggle('active')
+        navbarloginMenus.current.classList.toggle('active')
     }
 
     return (
@@ -28,14 +31,14 @@ function NavBar() {
                     <li><Link to="/">학원소개</Link></li>
                     <li><Link to="/videoList">연주영상</Link></li>
                     <li><Link to="/boardList">게시판</Link></li>
-                    <li><Link to="/login">로그인</Link></li>
-                    <li><Link to="/register">회원가입</Link></li>
                 </ul>
+                <LoginMenus navbarloginMenus={navbarloginMenus} />
                 <ul ref={navbarIcons} className="navbar__icons">
-                    <li><FontAwesomeIcon icon={faInstagram} /></li>
+                    <li><a href="https://www.instagram.com/in_muu_dongtan/">
+                        <FontAwesomeIcon icon={faInstagram} /></a></li>
                     <li><FontAwesomeIcon icon={faFacebookF} /></li>
                 </ul>
-                <a href="#" onClick={toggleButton} className="navbar__toggleBtn">
+                <a onClick={toggleButton} className="navbar__toggleBtn">
                     <FontAwesomeIcon icon={faBars} />
                 </a>
             </nav>

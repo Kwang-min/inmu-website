@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../../_actions/user_actions';
 
 function LoginPage(props) {
+
+    const dispatch = useDispatch();
 
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -25,13 +28,12 @@ function LoginPage(props) {
         }
 
 
-        axios.post('/api/users/login', body)
+        dispatch(loginUser(body))
             .then(response => {
-                if (response.data.loginSuccess) {
-                    console.log(props.history);
+                if (response.payload.loginSuccess) {
                     props.history.push('/')
                 } else {
-                    alert('Error˝')
+                    alert('login Error˝')
                 }
             })
 

@@ -1,5 +1,4 @@
 import React, { useEffect,useState } from 'react'
-import { Tooltip } from 'antd'
 import { LikeOutlined,DislikeOutlined } from '@ant-design/icons';
 import Axios from 'axios'
 

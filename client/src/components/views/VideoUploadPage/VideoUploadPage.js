@@ -31,7 +31,7 @@ function VideoUploadPage(props) {
         
     }, [])
 
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState({})
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState(0)

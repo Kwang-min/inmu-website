@@ -1,7 +1,6 @@
 
 a {
     text-decoration: none;
-    color: white;
 }
 
 .navbar{
@@ -44,6 +43,25 @@ a {
     color:coral;
 }
 
+.navbar__loginMenus {
+    display: flex;
+    list-style: none;
+    padding-left:0;
+}
+.navbar__loginMenus li {
+    
+    padding: 8px 12px;
+}
+.navbar__loginMenus li a {
+    color: #5f5f79;
+    cursor: pointer;
+
+}
+
+.navbar__loginMenus li a:hover {
+    color: coral;
+}
+
 .navbar__icons {
     list-style: none;
     color: white;
@@ -81,6 +99,17 @@ a {
         width:100%;
         text-align: center;
     }
+    .navbar__loginMenus{
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        
+    }
+    .navbar__loginMenus li{
+        width:100%;
+        text-align: center;
+    }
     .navbar__icons{
         display: none;
         width: 100%;
@@ -92,7 +121,8 @@ a {
     }
 
     .navbar__menu.active,
-    .navbar__icons.active{
+    .navbar__icons.active,
+    .navbar__loginMenus.active{
         display:flex;
     }
 }

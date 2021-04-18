@@ -1,27 +1,18 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState } from 'react'
 import axios from 'axios';
 import QuillEditor from '../../editor/QuillEditor';
+import { useSelector } from "react-redux";
 import { withRouter } from 'react-router-dom'
 
 
 function BoardCreatePage(props) {
 
-    const [user, setUser] = useState()
+    const user = useSelector(state => state.user);
+
     const [content, setContent] = useState("");
     const [files, setFiles] = useState([]);
 
-    useEffect(() => {
-        console.log(user)
-        axios.get('/api/users/auth')
-        .then(response => {
-            if(response.data.isAuth) {
-                setUser(response.data)
-            } else {
-                alert('회원정보를 가져오는 데 실패했습니다')
-            }
-        })
-        
-    }, [])
+    
 
     const onEditorChange = (value) => {
         setContent(value)
@@ -36,13 +27,13 @@ function BoardCreatePage(props) {
         event.preventDefault();
         setContent("");
 
-        if( user && !user.isAuth) {
+        if( user.userData && !user.userData.isAuth) {
             return alert('Please log in!')
         }
 
         const variables = {
             content: content,
-            writer: user._id
+            writer: user.userData._id
         }
 
         

@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../../_actions/user_actions';
 
 function RegisterPage(props) {
+
+    const dispatch = useDispatch();
 
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -39,14 +42,14 @@ function RegisterPage(props) {
             name: Name
         }
 
-        axios.post('/api/users/register', body)
-        .then(response => {
-            if(response.data.success) {
-                props.history.push('/login')
-            } else {
-                alert('Failed to sign up')
-            }
-        })
+        dispatch(registerUser(body))
+            .then(response => {
+                if (response.payload.success) {
+                    props.history.push('/login')
+                } else {
+                    alert('Failed to sign up')
+                }
+            })
 
 
     }
