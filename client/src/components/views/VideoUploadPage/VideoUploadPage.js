@@ -1,37 +1,25 @@
-import React,{ useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import Dropzone from 'react-dropzone'
 import Axios from 'axios'
 import { PlusOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const PrivateOptions = [
-    {value: 1, label: "공개"},
-    {value: 0, label: "비공개" },
+    { value: 1, label: "공개" },
+    { value: 0, label: "비공개" },
 ]
 
 const CategoryOptions = [
-    { value: 0, label: "보컬"},
-    { value: 1, label: "기타"},
-    { value: 2, label: "피아노"},
-    { value: 3, label: "드럼"}
+    { value: 0, label: "보컬" },
+    { value: 1, label: "기타" },
+    { value: 2, label: "피아노" },
+    { value: 3, label: "드럼" }
 ]
 
 function VideoUploadPage(props) {
 
-    useEffect(() => {
-        
-        Axios.get('/api/users/auth')
-        .then(response => {
-            if(response.data.isAuth) {
-                setUser(response.data)
-            } else {
-                alert('회원정보를 가져오는 데 실패했습니다')
-            }
-        })
-        
-    }, [])
-
-    const [user, setUser] = useState({})
+    const user = useSelector(state => state.user);
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState(0)
@@ -56,14 +44,14 @@ function VideoUploadPage(props) {
 
         let formData = new FormData();
         const config = {
-            header: {'content-type': 'multipart/form-data'}
+            header: { 'content-type': 'multipart/form-data' }
         }
 
-        formData.append("file",  files[0])
+        formData.append("file", files[0])
 
         Axios.post('/api/video/uploadfiles', formData, config)
             .then(response => {
-                if(response.data.success) {
+                if (response.data.success) {
                     console.log(response.data)
 
                     let variable = {
@@ -75,8 +63,8 @@ function VideoUploadPage(props) {
 
                     Axios.post('/api/video/thumbnail', variable)
                         .then(response => {
-                            if(response.data.success) {
-                                
+                            if (response.data.success) {
+
                                 setDuration(response.data.fileDuration)
                                 setThumbnailPath(response.data.url)
                             } else {
@@ -93,11 +81,11 @@ function VideoUploadPage(props) {
 
     }
 
-    const onSubmit =  (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
         const variables = {
-            writer: user._id,
+            writer: user.userData._id,
             title: VideoTitle,
             description: Description,
             privacy: Private,
@@ -110,98 +98,100 @@ function VideoUploadPage(props) {
 
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {
-                if(response.data.success) {
+                if (response.data.success) {
                     alert('성공적으로 업로드를 했습니다')
                     setTimeout(() => {
                         props.history.push('/')
                     }, 3000);
-                    
-                }  else{
+
+                } else {
                     alert('비디오 업로드에 실패했습니다')
                 }
             })
     }
     return (
-        <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
+        <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <h2>Upload Video</h2>
             </div>
 
             <form onSubmit={onSubmit}>
-                <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-                        {/* Drop Zone */}
-                        <Dropzone
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    {/* Drop Zone */}
+                    <Dropzone
                         onDrop={onDrop}
                         multiple={false}
                         maxSize={1000000000}
-                        >
-                        {({ getRootProps, getInputProps}) => (
-                            <div style={{ width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',
-                            alignItems: 'center', justifyContent: 'center'}} {...getRootProps()}>
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                            <div style={{
+                                width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',
+                                alignItems: 'center', justifyContent: 'center'
+                            }} {...getRootProps()}>
                                 <input {...getInputProps()} />
                                 <PlusOutlined type="plus" style={{ fontSize: '3rem' }} />
 
                             </div>
                         )}
-                        </Dropzone>
-                        {/* Thumbnail */}
-                        {ThumbnailPath && 
-                            <div>
+                    </Dropzone>
+                    {/* Thumbnail */}
+                    {ThumbnailPath &&
+                        <div>
 
                             <img src={`http://localhost:5000/${ThumbnailPath}`} alt={'thumbnail'} />
 
-                            </div>
-                        }
-                        
+                        </div>
+                    }
+
                 </div>
 
                 <br />
                 <br />
-                    <label>Title</label>
-                    <input
-                        onChange={onTitleChange}
-                        value={VideoTitle}
-                    />
-                    <br />
-                    <br />
-                    <label>Description</label>
-                    <textarea
-                        onChange={onDescriptionChange}
-                        value={Description}
-                    />
-                    <br />
-                    <br />
+                <label>Title</label>
+                <input
+                    onChange={onTitleChange}
+                    value={VideoTitle}
+                />
+                <br />
+                <br />
+                <label>Description</label>
+                <textarea
+                    onChange={onDescriptionChange}
+                    value={Description}
+                />
+                <br />
+                <br />
 
-                    <select onChange={onPrivateChange}>
+                <select onChange={onPrivateChange}>
 
-                        {PrivateOptions.map((item, index) => (
-                            <option key={index} value={item.value}>{item.label}</option>
-                        ))}
+                    {PrivateOptions.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label}</option>
+                    ))}
 
-                    </select>
+                </select>
 
-                    <br />
-                    <br />
+                <br />
+                <br />
 
-                    <select onChange={onCategoryChange}>
-                        {CategoryOptions.map((item, index) => (
-                                <option key={index} value={item.value}>{item.label}</option>
-                        ))}
+                <select onChange={onCategoryChange}>
+                    {CategoryOptions.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label}</option>
+                    ))}
 
-                    </select>
+                </select>
 
-                    <br />
-                    <br />
+                <br />
+                <br />
 
-                    <button onClick={onSubmit}>
-                        Submit
+                <button onClick={onSubmit}>
+                    Submit
                     </button>
 
 
 
             </form>
 
-       
+
 
         </div>
     )

@@ -3,26 +3,19 @@ import Axios from 'axios'
 import Comment from './Sections/Comment'
 import LikeDislikes from './Sections/LikeDislikes'
 import { withRouter } from 'react-router-dom'
+import { useSelector } from "react-redux";
 
 
 function VideoDetailPage(props) {
 
-    
+    const user = useSelector(state => state.user);
+
     const videoId = props.match.params.videoId
     const variable = { videoId: videoId}
-    const [user, setUser] = useState({})
     const [VideoDetail, setVideoDetail] = useState([])
     const [Comments, setComments] = useState([])
 
     useEffect(() => {
-        Axios.get('/api/users/auth')
-            .then(response => {
-                if(response.data.isAuth) {
-                    setUser(response.data)
-                } else {
-                    alert('회원정보를 가져오는 데 실패했습니다')
-                }
-            })
         
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
@@ -58,7 +51,7 @@ function VideoDetailPage(props) {
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
     
                         <div>
-                            <LikeDislikes video userId={user._id} videoId={videoId} />
+                            <LikeDislikes video userId={user.userData._id} videoId={videoId} />
                             
                                 <img src={VideoDetail.writer.image} />
                                 <h2>{VideoDetail.writer.name}</h2>
@@ -67,7 +60,7 @@ function VideoDetailPage(props) {
                         </div>
     
                         {/* Comments */}
-                        <Comment user={user} refreshFunction={refreshFunction} commentLists={Comments} postId={videoId} />
+                        <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId} />
     
                     </div>
                 </div>

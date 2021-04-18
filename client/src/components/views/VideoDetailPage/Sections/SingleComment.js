@@ -2,12 +2,12 @@ import React,{ useState } from 'react'
 import { Comment, Avatar, Input } from 'antd';
 import Axios from 'axios'
 import LikeDislikes from './LikeDislikes';
-
+import { useSelector } from "react-redux";
 
 
 function SingleComment(props) {
 
-    const user = props.user;
+    const user = useSelector(state => state.user);
 
 
     const [OpenReply, setOpenReply] = useState(false);
@@ -26,7 +26,7 @@ function SingleComment(props) {
         
         const variables = {
             content : CommentValue,
-            writer : user._id,
+            writer : user.userData._id,
             postId : props.postId,
             responseTo : props.comment._id
         }
@@ -45,7 +45,7 @@ function SingleComment(props) {
     }
 
     const actions = [
-        <LikeDislikes userId={user._id} commentId={props.comment._id} />
+        <LikeDislikes userId={user.userData._id} commentId={props.comment._id} />
         ,<span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to </span>
     ]
     return (
