@@ -20,6 +20,10 @@ function NavBar() {
         navbarloginMenus.current.classList.toggle('active')
     }
 
+    const sendToInsta = () => {
+        window.open('https://www.instagram.com/in_muu_dongtan/')
+    }
+
     return (
         <>
             <nav className="navbar">
@@ -30,11 +34,11 @@ function NavBar() {
                 <ul ref={navbarMenu} className="navbar__menu">
                     <li><Link to="/">학원소개</Link></li>
                     <li><Link to="/videoList">연주영상</Link></li>
-                    <li><Link to="/boardList">게시판</Link></li>
+                    <li><Link to="/boardList">인생뮤직</Link></li>
                 </ul>
                 <LoginMenus navbarloginMenus={navbarloginMenus} />
                 <ul ref={navbarIcons} className="navbar__icons">
-                    <li><a href="https://www.instagram.com/in_muu_dongtan/">
+                    <li><a onClick={sendToInsta}>
                         <FontAwesomeIcon icon={faInstagram} /></a></li>
                     <li><FontAwesomeIcon icon={faFacebookF} /></li>
                 </ul>

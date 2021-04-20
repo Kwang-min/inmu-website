@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react'
 import axios from 'axios';
-import { SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import './BoardMainPage.css'
 import { Link } from "react-router-dom";
 
 function BoardMainPage() {
@@ -19,31 +19,31 @@ function BoardMainPage() {
     }, [])
 
     const renderCards = blogs.map((blog, index) => {
-        return <div>
-            <div style={{ width: 370, marginTop: 16 }}>
-                <div>
-                    <SettingOutlined key="setting" />
-                    <EditOutlined key="edit" />
-                    <Link to={`/board/post/${blog._id}`}><EllipsisOutlined key="ellipsis" /></Link>
+        return <>
+            <Link to={`/board/post/${blog._id}`}>
+                <div classNmae={`post post_${index}`}>
+                    <div>
+                        <img src="https://i.imgur.com/iAtcsNc.jpg" />
+                    </div>
+                    <div>
+                        <img 
+                        src={blog.writer.image ? blog.writer.image : 'https://i.imgur.com/hOvczEj.png'} 
+                        className={'user_avatar'}
+                        />
+                        <span>{blog.writer.name}</span>
+                    </div>
+                    <div>
+                        <span>{blog.title}</span>
+                    </div>
                 </div>
-                <div>
-                    
-                    <img src={blog.writer.image} />
-                    
-                    <span>{blog.writer.name}</span>
-                    <span>this is description</span>
-                </div>
-                <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
-                    <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-                </div>
-            </div>
-        </div>
+            </Link>
+        </>
     })
 
     return (
-        <div style={{ width: '85%', margin: '3rem auto'}}>
-            <h2> Blog Lists </h2>
-            <div>
+        <div style={{ width: '85%', margin: '3rem auto' }}>
+            <h2> 인생뮤직 </h2>
+            <div className={'postContainer'}>
                 {renderCards}
             </div>
         </div>

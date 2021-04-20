@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import Dropzone from 'react-dropzone'
+import { Typography, Button, Form, Input} from 'antd';
 import Axios from 'axios'
 import { PlusOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+
+
+const { TextArea } = Input;
+const { Title } = Typography;
 
 const PrivateOptions = [
     { value: 1, label: "공개" },
@@ -101,7 +106,7 @@ function VideoUploadPage(props) {
                 if (response.data.success) {
                     alert('성공적으로 업로드를 했습니다')
                     setTimeout(() => {
-                        props.history.push('/')
+                        props.history.push('/videoList')
                     }, 3000);
 
                 } else {
@@ -110,87 +115,84 @@ function VideoUploadPage(props) {
             })
     }
     return (
-        <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
+        <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <h2>Upload Video</h2>
+                <Title level={2}>Upload Video</Title>
             </div>
 
-            <form onSubmit={onSubmit}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    {/* Drop Zone */}
-                    <Dropzone
+            <Form onSubmit={onSubmit}>
+                <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                        {/* Drop Zone */}
+                        <Dropzone
                         onDrop={onDrop}
                         multiple={false}
                         maxSize={1000000000}
-                    >
-                        {({ getRootProps, getInputProps }) => (
-                            <div style={{
-                                width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',
-                                alignItems: 'center', justifyContent: 'center'
-                            }} {...getRootProps()}>
+                        >
+                        {({ getRootProps, getInputProps}) => (
+                            <div style={{ width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',
+                            alignItems: 'center', justifyContent: 'center'}} {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <PlusOutlined type="plus" style={{ fontSize: '3rem' }} />
+                                <PlusOutlined style={{ fontSize: '3rem' }} />
 
                             </div>
                         )}
-                    </Dropzone>
-                    {/* Thumbnail */}
-                    {ThumbnailPath &&
-                        <div>
+                        </Dropzone>
+                        {/* Thumbnail */}
+                        {ThumbnailPath && 
+                            <div>
 
                             <img src={`http://localhost:5000/${ThumbnailPath}`} alt={'thumbnail'} />
 
-                        </div>
-                    }
-
+                            </div>
+                        }
+                        
                 </div>
 
                 <br />
                 <br />
-                <label>Title</label>
-                <input
-                    onChange={onTitleChange}
-                    value={VideoTitle}
-                />
-                <br />
-                <br />
-                <label>Description</label>
-                <textarea
-                    onChange={onDescriptionChange}
-                    value={Description}
-                />
-                <br />
-                <br />
+                    <label>Title</label>
+                    <Input
+                        onChange={onTitleChange}
+                        value={VideoTitle}
+                    />
+                    <br />
+                    <br />
+                    <label>Description</label>
+                    <TextArea
+                        onChange={onDescriptionChange}
+                        value={Description}
+                    />
+                    <br />
+                    <br />
 
-                <select onChange={onPrivateChange}>
+                    <select onChange={onPrivateChange}>
 
-                    {PrivateOptions.map((item, index) => (
-                        <option key={index} value={item.value}>{item.label}</option>
-                    ))}
+                        {PrivateOptions.map((item, index) => (
+                            <option key={index} value={item.value}>{item.label}</option>
+                        ))}
 
-                </select>
+                    </select>
 
-                <br />
-                <br />
+                    <br />
+                    <br />
 
-                <select onChange={onCategoryChange}>
-                    {CategoryOptions.map((item, index) => (
-                        <option key={index} value={item.value}>{item.label}</option>
-                    ))}
+                    <select onChange={onCategoryChange}>
+                        {CategoryOptions.map((item, index) => (
+                                <option key={index} value={item.value}>{item.label}</option>
+                        ))}
 
-                </select>
+                    </select>
 
-                <br />
-                <br />
+                    <br />
+                    <br />
 
-                <button onClick={onSubmit}>
-                    Submit
-                    </button>
+                    <Button type="primary" size="large" onClick={onSubmit}>
+                        Submit
+                    </Button>
 
 
 
-            </form>
-
+            </Form>
 
 
         </div>

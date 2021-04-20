@@ -1,5 +1,6 @@
 import React,{ useState } from 'react'
 import axios from 'axios';
+import { Button, Form, Input} from 'antd';
 import QuillEditor from '../../editor/QuillEditor';
 import { useSelector } from "react-redux";
 import { withRouter } from 'react-router-dom'
@@ -9,10 +10,13 @@ function BoardCreatePage(props) {
 
     const user = useSelector(state => state.user);
 
+    const [postTitle, setPostTitle] = useState("")
     const [content, setContent] = useState("");
     const [files, setFiles] = useState([]);
 
-    
+    const onTitleChange = (e) => {
+        setPostTitle(e.currentTarget.value)
+    }
 
     const onEditorChange = (value) => {
         setContent(value)
@@ -26,12 +30,14 @@ function BoardCreatePage(props) {
     const onSubmit = (event) => {
         event.preventDefault();
         setContent("");
+        setPostTitle("");
 
         if( user.userData && !user.userData.isAuth) {
             return alert('Please log in!')
         }
 
         const variables = {
+            title: postTitle,
             content: content,
             writer: user.userData._id
         }
@@ -44,8 +50,8 @@ function BoardCreatePage(props) {
                 alert('Post created!');
 
                 setTimeout(() => {
-                    props.history.push('/blog')
-                }, 2000);
+                    props.history.push('/boardList')
+                }, 1000);
             }
             
         })
@@ -55,15 +61,18 @@ function BoardCreatePage(props) {
         <div>
             <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 > Editor</h2>
+                    <h2 > 글 작성 </h2>
                 </div>
-                <QuillEditor
+                <form onSubmit={onSubmit}>
+                    <Input 
+                        onChange={onTitleChange}
+                        value={postTitle}
+                    />
+                    <QuillEditor
                     placeholder={"Start Posting Something"}
                     onEditorChange={onEditorChange}
                     onFilesChange={onFilesChange}
-                />
-
-                <form onSubmit={onSubmit}>
+                    />
                     <div style={{ textAlign: 'center', margin: '2rem', }}>
                         <button
                             className=""

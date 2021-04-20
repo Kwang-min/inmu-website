@@ -1,0 +1,29 @@
+.postContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    /* grid-auto-rows: minmax(200px, auto); */
+    grid-gap: 25px;
+}
+
+.post {
+    
+}
+
+.user_avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+@media screen and (min-width: 500px) {
+    .postContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .postContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

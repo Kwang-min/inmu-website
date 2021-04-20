@@ -1,4 +1,5 @@
-import React,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Row, Col, List, Avatar } from 'antd'
 import Axios from 'axios'
 import Comment from './Sections/Comment'
 import LikeDislikes from './Sections/LikeDislikes'
@@ -11,15 +12,15 @@ function VideoDetailPage(props) {
     const user = useSelector(state => state.user);
 
     const videoId = props.match.params.videoId
-    const variable = { videoId: videoId}
+    const variable = { videoId: videoId }
     const [VideoDetail, setVideoDetail] = useState([])
     const [Comments, setComments] = useState([])
 
     useEffect(() => {
-        
+
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
-                if(response.data.success) {
+                if (response.data.success) {
                     setVideoDetail(response.data.videoDetail)
                 } else {
                     alert('비디오 정보를 가져오는 걸 실패했습니다')
@@ -28,9 +29,9 @@ function VideoDetailPage(props) {
 
         Axios.post('/api/comment/getComments', variable)
             .then(response => {
-                if(response.data.success) {
+                if (response.data.success) {
                     setComments(response.data.comments)
-                    console.log('detail',response.data.comments)
+                    console.log('detail', response.data.comments)
                 } else {
                     alert('코멘트 정보를 가져오는 것을 실패했습니다')
                 }
@@ -42,42 +43,47 @@ function VideoDetailPage(props) {
         setComments(Comments.concat(newComment))
     }
 
-    if(VideoDetail.writer) {
+    if (VideoDetail.writer) {
 
         return (
-            <div>
-                <div>
+            <Row gutter={[16, 16]}>
+                <Col lg={18} xs={24}>
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
-    
-                        <div>
-                            <LikeDislikes video userId={user.userData._id} videoId={videoId} />
-                            
-                                <img src={VideoDetail.writer.image} />
-                                <h2>{VideoDetail.writer.name}</h2>
-                                <span>{VideoDetail.description}</span>
-                            
-                        </div>
-    
+
+                        <List.Item
+                            actions={[<LikeDislikes video userId={user.userData._id}
+                                videoId={videoId} />]}
+                        >
+                            <List.Item.Meta
+                                avatar={<Avatar src={VideoDetail.writer.image} />}
+                                title={VideoDetail.writer.name}
+                                description={VideoDetail.description}
+                            />
+                        </List.Item>
+
                         {/* Comments */}
                         <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId} />
-    
+
                     </div>
-                </div>
-            </div>
-        ) 
+                </Col>
+                <Col lg={6} xs={24}>
+
+                </Col>
+            </Row>
+        )
 
     } else {
 
         return (
 
             <div>...loading</div>
-        
+
         )
     }
-    
 
-    
+
+
 }
 
 export default withRouter(VideoDetailPage)
