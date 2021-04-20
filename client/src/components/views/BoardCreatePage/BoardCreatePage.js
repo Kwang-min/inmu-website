@@ -63,7 +63,7 @@ function BoardCreatePage(props) {
                 <div style={{ textAlign: 'center' }}>
                     <h2 > 글 작성 </h2>
                 </div>
-                <form onSubmit={onSubmit}>
+                <Form onSubmit={onSubmit}>
                     <Input 
                         onChange={onTitleChange}
                         value={postTitle}
@@ -74,14 +74,11 @@ function BoardCreatePage(props) {
                     onFilesChange={onFilesChange}
                     />
                     <div style={{ textAlign: 'center', margin: '2rem', }}>
-                        <button
-                            className=""
-                            onSubmit={onSubmit}
-                        >
-                            Submit
-                    </button>
+                    <Button type="primary" size="large" onClick={onSubmit}>
+                        Submit
+                    </Button>
                     </div>
-                </form>
+                </Form>
             </div>
         </div>
     )
