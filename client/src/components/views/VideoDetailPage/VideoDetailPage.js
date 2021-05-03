@@ -5,18 +5,31 @@ import Comment from './Sections/Comment'
 import LikeDislikes from './Sections/LikeDislikes'
 import { withRouter } from 'react-router-dom'
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { getComment } from '../../../_actions/comment_actions';
 
 
 function VideoDetailPage(props) {
 
-    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
+    const user = useSelector(state => state.user);
+    const commentList = useSelector(state => state.comment);
+    
     const videoId = props.match.params.videoId
     const variable = { videoId: videoId }
     const [VideoDetail, setVideoDetail] = useState([])
-    const [Comments, setComments] = useState([])
 
     useEffect(() => {
+
+        dispatch(getComment(variable))
+        .then(response => {
+            if(response.payload.success) {
+                
+            } else {
+                alert('코멘트 정보를 가져오는 것을 실패했습니다')
+            } 
+        })
 
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
@@ -26,22 +39,8 @@ function VideoDetailPage(props) {
                     alert('비디오 정보를 가져오는 걸 실패했습니다')
                 }
             })
-
-        Axios.post('/api/comment/getComments', variable)
-            .then(response => {
-                if (response.data.success) {
-                    setComments(response.data.comments)
-                    console.log('detail', response.data.comments)
-                } else {
-                    alert('코멘트 정보를 가져오는 것을 실패했습니다')
-                }
-            })
-
+        
     }, [])
-
-    const refreshFunction = (newComment) => {
-        setComments(Comments.concat(newComment))
-    }
 
     if (VideoDetail.writer) {
 
@@ -63,7 +62,10 @@ function VideoDetailPage(props) {
                         </List.Item>
 
                         {/* Comments */}
-                        <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId} />
+                        {commentList.commentList && 
+                            <Comment  commentLists={commentList.commentList.comments} postId={videoId} />
+                        }
+                        
 
                     </div>
                 </Col>

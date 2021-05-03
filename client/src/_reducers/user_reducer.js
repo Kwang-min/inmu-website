@@ -18,7 +18,7 @@ export default function user (state = {}, action) {
             return { ...state, userData: action.payload }
             break;
         case LOGOUT_USER:
-            return {...state, logoutSucess: action.payload}
+            return {...state}
             break;
         default:
             return state;

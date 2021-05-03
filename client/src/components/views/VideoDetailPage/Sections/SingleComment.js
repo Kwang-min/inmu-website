@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd';
-import Axios from 'axios'
 import LikeDislikes from './LikeDislikes';
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { saveComment } from '../../../../_actions/comment_actions';
 
 const { TextArea } = Input;
 
 function SingleComment(props) {
 
-    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
+    const user = useSelector(state => state.user);
 
     const [OpenReply, setOpenReply] = useState(false);
     const [CommentValue, setCommentValue] = useState("")
@@ -25,6 +27,11 @@ function SingleComment(props) {
     const onSubmit = (event) => {
         event.preventDefault();
 
+        if( user.userData && !user.userData.isAuth) {
+            setCommentValue("")
+            return alert('Please log in!')
+        }
+
         const variables = {
             content: CommentValue,
             writer: user.userData._id,
@@ -32,17 +39,15 @@ function SingleComment(props) {
             responseTo: props.comment._id
         }
 
-        Axios.post('/api/comment/saveComment', variables)
-            .then(response => {
-                if (response.data.success) {
-                    console.log(response.data.result)
-                    setCommentValue("")
-                    setOpenReply(false)
-                    props.refreshFunction(response.data.result)
-                } else {
-                    alert('커멘트를 저장하지 못했어요')
-                }
-            })
+        dispatch(saveComment(variables))
+        .then(response => {
+            if(response.payload.success) {
+                setCommentValue("")
+            } else {
+                alert('코멘트 정보를 가져오는 것을 실패했습니다')
+            } 
+        })
+
     }
 
     const actions = [

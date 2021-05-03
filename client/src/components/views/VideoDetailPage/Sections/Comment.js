@@ -3,9 +3,13 @@ import Axios from 'axios'
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { saveComment } from '../../../../_actions/comment_actions';
 
 function Comment(props) {
-    
+
+    const dispatch = useDispatch();
+
     const videoId = props.postId;
 
     const user = useSelector(state => state.user);
@@ -20,21 +24,26 @@ function Comment(props) {
 
         event.preventDefault();
 
+        if( user.userData && !user.userData.isAuth) {
+            setcommentValue("")
+            return alert('Please log in!')
+        }
+
         const variables = {
             content : commentValue,
             writer : user.userData._id,
             postId : videoId
         }
 
-        Axios.post('/api/comment/saveComment', variables)
-            .then(response => {
-                if(response.data.success) {
-                    setcommentValue("")
-                    props.refreshFunction(response.data.result)
-                } else {
-                    alert('커멘트를 저장하지 못했어요')
-                }
-            })
+        dispatch(saveComment(variables))
+        .then(response => {
+            if(response.payload.success) {
+                setcommentValue("")
+            } else {
+                alert('코멘트 정보를 가져오는 것을 실패했습니다')
+            } 
+        })
+
     }
     return (
         <div>
@@ -47,8 +56,8 @@ function Comment(props) {
             {props.commentLists && props.commentLists.map((comment, index) => (
                 (!comment.responseTo && 
                     <React.Fragment>
-                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId} /> 
-                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={videoId} commentLists={props.commentLists} />
+                        <SingleComment comment={comment} postId={videoId} /> 
+                        <ReplyComment parentCommentId={comment._id} postId={videoId} commentLists={props.commentLists} />
                     </React.Fragment>
                 )
                 
