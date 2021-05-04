@@ -4,6 +4,7 @@ import LikeDislikes from './LikeDislikes';
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { saveComment } from '../../../../_actions/comment_actions';
+import { deleteComment } from '../../../../_actions/comment_actions';
 
 const { TextArea } = Input;
 
@@ -24,30 +25,59 @@ function SingleComment(props) {
         setCommentValue(event.currentTarget.value)
     }
 
+    const onClickDelete = () => {
+        
+        const variableForDelete = {
+            _id: props.comment._id,
+            postId: props.postId
+        }
+
+        dispatch(deleteComment(variableForDelete))
+            .then(response => {
+                if (response.payload.success) {
+                    console.log('hi')
+                } else {
+                    alert('코멘트 정보를 가져오는 것을 실패했습니다')
+                }
+            })
+
+    }
+
     const onSubmit = (event) => {
         event.preventDefault();
 
-        if( user.userData && !user.userData.isAuth) {
+        if (user.userData && !user.userData.isAuth) {
             setCommentValue("")
             return alert('Please log in!')
         }
 
-        const variables = {
+        const variableForSave = {
             content: CommentValue,
             writer: user.userData._id,
             postId: props.postId,
             responseTo: props.comment._id
         }
 
-        dispatch(saveComment(variables))
-        .then(response => {
-            if(response.payload.success) {
-                setCommentValue("")
-            } else {
-                alert('코멘트 정보를 가져오는 것을 실패했습니다')
-            } 
-        })
+        dispatch(saveComment(variableForSave))
+            .then(response => {
+                if (response.payload.success) {
+                    setCommentValue("")
+                } else {
+                    alert('코멘트 정보를 가져오는 것을 실패했습니다')
+                }
+            })
 
+
+
+    }
+
+
+
+
+
+    let deleteButton;
+    if (props.comment.writer._id === user.userData._id) {
+        deleteButton = <span onClick={onClickDelete}> 삭제</span>;
     }
 
     const actions = [
@@ -57,7 +87,7 @@ function SingleComment(props) {
     return (
         <div>
             <Comment
-                actions={actions}
+                actions={[...actions, deleteButton]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt />}
                 content={<p> {props.comment.content} </p>}

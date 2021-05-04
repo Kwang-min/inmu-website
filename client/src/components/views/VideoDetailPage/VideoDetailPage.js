@@ -17,7 +17,7 @@ function VideoDetailPage(props) {
     const commentList = useSelector(state => state.comment);
     
     const videoId = props.match.params.videoId
-    const variable = { videoId: videoId }
+    const variable = { postId: videoId }
     const [VideoDetail, setVideoDetail] = useState([])
 
     useEffect(() => {

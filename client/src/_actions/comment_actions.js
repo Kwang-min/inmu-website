@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
     SAVE_COMMENT,
-    GET_COMMENT
+    GET_COMMENT,
+    DELETE_COMMENT
 } from './types';
 
 export function getComment(dataToSubmit) {
@@ -25,3 +26,15 @@ export function saveComment(dataToSubmit) {
         payload: request
     }
 }
+
+export function deleteComment(dataToSubmit) {
+
+    const request = axios.post('/api/comment/deleteComment', dataToSubmit)
+        .then(response => response.data )
+
+    return {
+        type: DELETE_COMMENT,
+        payload: request
+    }
+}
+
