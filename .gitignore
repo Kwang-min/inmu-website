@@ -2,4 +2,9 @@
 
 dev.js
 
-uploads/*
+# uploads/*
+
+uploads/videos/*
+!*uploads/videos/thumbnails
+uploads/videos/thumbnails/*
+uploads/images/*
