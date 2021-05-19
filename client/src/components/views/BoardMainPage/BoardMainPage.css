@@ -4,16 +4,23 @@
     grid-template-rows: auto;
     /* grid-auto-rows: minmax(200px, auto); */
     grid-gap: 25px;
+    
 }
 
-.post {
-    
+.postContainer a {
+    color: black;
+}
+.metadata {
+    padding: 12px 0;
+    color: black;
+
 }
 
 .user_avatar {
     width: 36px;
     height: 36px;
     border-radius: 50%;
+    margin-right: 3px;
 }
 
 @media screen and (min-width: 500px) {

@@ -1,5 +1,6 @@
 import React,{ useEffect, useState } from 'react'
 import axios from 'axios'
+import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 
 
@@ -25,12 +26,16 @@ function BoardDetailPage(props) {
     }, [])
 
     if (post.writer) {
+
+        const createdAt = moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss") 
+
         return (
-            <div className="postPage" style={{ width: '80%', margin: '3rem auto' }}>
-                <h2>{post.writer.name}`s Post</h2>
+            <div className="postPage" style={{ width: '50%', margin: '3rem auto' }}>
+                <h2>{post.title}</h2>
+                <h3>작성자 {post.writer.name}</h3>
                 <br />
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <h2>{post.createdAt}</h2>
+                    <h2>{createdAt}</h2>
                 </div>
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
 

@@ -19,13 +19,13 @@ function BoardMainPage() {
     }, [])
 
     const renderCards = blogs.map((blog, index) => {
-        return <>
+        return <div key={index}>
             <Link to={`/board/post/${blog._id}`}>
-                <div classNmae={`post post_${index}`}>
+                <div className={`post post_${index}`}>
                     <div>
                         <img src="https://i.imgur.com/iAtcsNc.jpg" />
                     </div>
-                    <div>
+                    <div className={'metadata'}>
                         <img 
                         src={blog.writer.image ? blog.writer.image : 'https://i.imgur.com/hOvczEj.png'} 
                         className={'user_avatar'}
@@ -37,12 +37,12 @@ function BoardMainPage() {
                     </div>
                 </div>
             </Link>
-        </>
+        </div>
     })
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
-            <h2> 인생뮤직 </h2>
+            <h2 style={{ fontWeight: '600'}}> 인생뮤직 </h2>
             <div className={'postContainer'}>
                 {renderCards}
             </div>
