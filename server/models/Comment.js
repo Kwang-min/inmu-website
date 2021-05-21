@@ -14,12 +14,16 @@ const commentSchema = mongoose.Schema({
     },
     responseTo: {
         type: Schema.Types.ObjectId,
-        ref:'User'
+        // ref:'User'
+        ref:'Comment'
     },
     content : {
         type: String
+    },
+    isDeleted: {    
+        type: Boolean,
+        default: false
     }
-    
 }, { timestamps: true })
 
 const Comment = mongoose.model('Comment', commentSchema);

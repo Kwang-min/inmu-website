@@ -47,7 +47,7 @@ router.post('/getComments', (req, res) => {
 router.post('/deleteComment', (req, res) => {
 
   Comment.findOneAndUpdate({ _id: req.body._id },
-    { content: "[삭제된 댓글입니다]" }
+    { isDeleted: true }
     , (err, user) => {
       if (err) return res.json({ success: false, err })
 

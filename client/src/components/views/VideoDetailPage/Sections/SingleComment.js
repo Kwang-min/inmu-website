@@ -71,13 +71,18 @@ function SingleComment(props) {
 
     }
 
-
-
-
-
     let deleteButton;
     if (props.comment.writer._id === user.userData._id) {
-        deleteButton = <span onClick={onClickDelete}> 삭제</span>;
+        if(!props.comment.isDeleted) {
+            deleteButton = <span onClick={onClickDelete}> 삭제</span>;
+        }
+    }
+
+    let comment;
+    if(props.comment.isDeleted) {
+        comment = <p style={{ color: 'grey' }}>삭제된 댓글입니다</p>
+    } else {
+        comment = <p> {props.comment.content} </p>
     }
 
     const actions = [
@@ -90,7 +95,7 @@ function SingleComment(props) {
                 actions={[...actions, deleteButton]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt />}
-                content={<p> {props.comment.content} </p>}
+                content={comment}
             />
             {OpenReply &&
                 <form style={{ display: 'flex' }} onSubmit={onSubmit}>
