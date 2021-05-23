@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { Suspense } from 'react';
 import {
@@ -43,7 +42,6 @@ function App() {
         </Router>
       <Footer />
     </Suspense>
-    
   );
 }
 

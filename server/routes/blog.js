@@ -49,26 +49,37 @@ router.post("/createPost", (req, res) => {
     });
 });
 
+router.post("/deletePost", (req, res) => {
+    Blog.findOneAndDelete({ "_id": req.body.postId }, function (err, docs) {
+
+        if (err) return res.json({ success: false, err })
+
+        res.status(200).json({ success: true, docs })
+
+    });
+
+});
+
 router.get("/getBlogs", (req, res) => {
     Blog.find()
         .populate('writer')
         .exec((err, blogs) => {
-            if(err) return res.status(400).send(err);
-            
+            if (err) return res.status(400).send(err);
+
             res.status(200).json({ success: true, blogs })
         })
 });
 
 router.post("/getPost", (req, res) => {
 
-    Blog.findOne( { "_id": req.body.postId })
+    Blog.findOne({ "_id": req.body.postId })
         .populate('writer')
         .exec((err, post) => {
-            if(err) return res.status(400).send(err);
+            if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, post })
         })
 
-   
+
 });
 
 
