@@ -17,6 +17,9 @@ function LoginMenus(props) {
             .then(response => {
                 if (response.payload.success) {
                     props.history.push('/login')
+                } else if(response.payload.isAuth === false) {
+                    alert("다시 로그인해주세요!")
+                    props.history.push('/login')
                 } else {
                     alert('Failed to log out')
                 }

@@ -42,7 +42,7 @@ function BoardMainPage() {
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
-            <h2 style={{ fontWeight: '600'}}> 인생뮤직 </h2>
+            <h2 style={{ fontWeight: '600'}}> 인뮤소식 </h2>
             <div className={'postContainer'}>
                 {renderCards}
             </div>
