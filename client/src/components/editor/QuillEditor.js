@@ -9,6 +9,7 @@ const __ISMSIE__ = navigator.userAgent.match(/Trident/i) ? true : false;
 
 const QuillClipboard = Quill.import('modules/clipboard');
 
+//클립보드는 다른 곳에서 복사해서 붙여넣기 했을 때 처리해주는 곳인 듯
 class Clipboard extends QuillClipboard {
 
     getMetaTagElements = (stringContent) => {
@@ -63,12 +64,13 @@ class Clipboard extends QuillClipboard {
 }
 Quill.register('modules/clipboard', Clipboard, true);
 
-const BlockEmbed = Quill.import('blots/block/embed');
 
+const BlockEmbed = Quill.import('blots/block/embed');
+//블락임베드는 퀼에디터 안에 중간에 삽입할 덩어리를 정의한 후 사용하는 것인 듯
 class ImageBlot extends BlockEmbed {
 
     static create(value) {
-        const imgTag = super.create();
+        const imgTag = super.create(); 
         imgTag.setAttribute('src', value.src);
         imgTag.setAttribute('alt', value.alt);
         imgTag.setAttribute('width', '100%');
@@ -85,108 +87,108 @@ ImageBlot.blotName = 'image';
 ImageBlot.tagName = 'img';
 Quill.register(ImageBlot);
 
-class VideoBlot extends BlockEmbed {
+// class VideoBlot extends BlockEmbed {
 
-    static create(value) {
-        if (value && value.src) {
-            const videoTag = super.create();
-            videoTag.setAttribute('src', value.src);
-            videoTag.setAttribute('title', value.title);
-            videoTag.setAttribute('width', '100%');
-            videoTag.setAttribute('controls', '');
+//     static create(value) {
+//         if (value && value.src) {
+//             const videoTag = super.create();
+//             videoTag.setAttribute('src', value.src);
+//             videoTag.setAttribute('title', value.title);
+//             videoTag.setAttribute('width', '100%');
+//             videoTag.setAttribute('controls', '');
 
-            return videoTag;
-        } else {
-            const iframeTag = document.createElement('iframe');
-            iframeTag.setAttribute('src', value);
-            iframeTag.setAttribute('frameborder', '0');
-            iframeTag.setAttribute('allowfullscreen', true);
-            iframeTag.setAttribute('width', '100%');
-            return iframeTag;
-        }
-    }
+//             return videoTag;
+//         } else {
+//             const iframeTag = document.createElement('iframe');
+//             iframeTag.setAttribute('src', value);
+//             iframeTag.setAttribute('frameborder', '0');
+//             iframeTag.setAttribute('allowfullscreen', true);
+//             iframeTag.setAttribute('width', '100%');
+//             return iframeTag;
+//         }
+//     }
 
-    static value(node) {
-        if (node.getAttribute('title')) {
-            return { src: node.getAttribute('src'), alt: node.getAttribute('title') };
-        } else {
-            return node.getAttribute('src');
-        }
-        // return { src: node.getAttribute('src'), alt: node.getAttribute('title') };
-    }
+//     static value(node) {
+//         if (node.getAttribute('title')) {
+//             return { src: node.getAttribute('src'), alt: node.getAttribute('title') };
+//         } else {
+//             return node.getAttribute('src');
+//         }
+//         // return { src: node.getAttribute('src'), alt: node.getAttribute('title') };
+//     }
 
-}
+// }
 
-VideoBlot.blotName = 'video';
-VideoBlot.tagName = 'video';
-Quill.register(VideoBlot);
+// VideoBlot.blotName = 'video';
+// VideoBlot.tagName = 'video';
+// Quill.register(VideoBlot);
 
-class FileBlot extends BlockEmbed {
+// class FileBlot extends BlockEmbed {
 
-    static create(value) {
-        const prefixTag = document.createElement('span');
-        prefixTag.innerText = "첨부파일 - ";
+//     static create(value) {
+//         const prefixTag = document.createElement('span');
+//         prefixTag.innerText = "첨부파일 - ";
 
-        const bTag = document.createElement('b');
-        //위에 첨부파일 글자 옆에  파일 이름이 b 태그를 사용해서 나온다.
-        bTag.innerText = value;
+//         const bTag = document.createElement('b');
+//         //위에 첨부파일 글자 옆에  파일 이름이 b 태그를 사용해서 나온다.
+//         bTag.innerText = value;
 
-        const linkTag = document.createElement('a');
-        linkTag.setAttribute('href', value);
-        linkTag.setAttribute("target", "_blank");
-        linkTag.setAttribute("className", "file-link-inner-post");
-        linkTag.appendChild(bTag);
-        //linkTag 이런식으로 나온다 <a href="btn_editPic@3x.png" target="_blank" classname="file-link-inner-post"><b>btn_editPic@3x.png</b></a>
+//         const linkTag = document.createElement('a');
+//         linkTag.setAttribute('href', value);
+//         linkTag.setAttribute("target", "_blank");
+//         linkTag.setAttribute("className", "file-link-inner-post");
+//         linkTag.appendChild(bTag);
+//         //linkTag 이런식으로 나온다 <a href="btn_editPic@3x.png" target="_blank" classname="file-link-inner-post"><b>btn_editPic@3x.png</b></a>
 
-        const node = super.create();
-        node.appendChild(prefixTag);
-        node.appendChild(linkTag);
+//         const node = super.create();
+//         node.appendChild(prefixTag);
+//         node.appendChild(linkTag);
 
-        return node;
-    }
+//         return node;
+//     }
 
-    static value(node) {
-        const linkTag = node.querySelector('a');
-        return linkTag.getAttribute('href');
-    }
+//     static value(node) {
+//         const linkTag = node.querySelector('a');
+//         return linkTag.getAttribute('href');
+//     }
 
-}
+// }
 
-FileBlot.blotName = 'file';
-FileBlot.tagName = 'p';
-FileBlot.className = 'file-inner-post';
-Quill.register(FileBlot);
+// FileBlot.blotName = 'file';
+// FileBlot.tagName = 'p';
+// FileBlot.className = 'file-inner-post';
+// Quill.register(FileBlot);
 
-class PollBlot extends BlockEmbed {
+// class PollBlot extends BlockEmbed {
 
-    static create(value) {
-        const prefixTag = document.createElement('span');
-        prefixTag.innerText = "투표 - ";
+//     static create(value) {
+//         const prefixTag = document.createElement('span');
+//         prefixTag.innerText = "투표 - ";
 
-        const bTag = document.createElement('b');
-        bTag.innerText = value.title;
+//         const bTag = document.createElement('b');
+//         bTag.innerText = value.title;
 
-        const node = super.create();
-        node.setAttribute('id', value.id);
-        node.appendChild(prefixTag);
-        node.appendChild(bTag);
+//         const node = super.create();
+//         node.setAttribute('id', value.id);
+//         node.appendChild(prefixTag);
+//         node.appendChild(bTag);
 
-        return node;
-    }
+//         return node;
+//     }
 
-    static value(node) {
-        const id = node.getAttribute('id');
-        const bTag = node.querySelector('b');
-        const title = bTag.innerText;
-        return { id, title };
-    }
+//     static value(node) {
+//         const id = node.getAttribute('id');
+//         const bTag = node.querySelector('b');
+//         const title = bTag.innerText;
+//         return { id, title };
+//     }
 
-}
+// }
 
-PollBlot.blotName = 'poll';
-PollBlot.tagName = 'p';
-PollBlot.className = 'poll-inner-post';
-Quill.register(PollBlot);
+// PollBlot.blotName = 'poll';
+// PollBlot.tagName = 'p';
+// PollBlot.className = 'poll-inner-post';
+// Quill.register(PollBlot);
 
 class QuillEditor extends React.Component {
 
@@ -194,7 +196,7 @@ class QuillEditor extends React.Component {
     placeholder;
     onEditorChange;
     onFilesChange;
-    onPollsChange;
+    // onPollsChange;
     _isMounted;
 
     constructor(props) {
@@ -208,8 +210,8 @@ class QuillEditor extends React.Component {
         this.reactQuillRef = null;
 
         this.inputOpenImageRef = React.createRef();
-        this.inputOpenVideoRef = React.createRef();
-        this.inputOpenFileRef = React.createRef();
+        // this.inputOpenVideoRef = React.createRef();
+        // this.inputOpenFileRef = React.createRef();
     }
 
     componentDidMount() {
@@ -221,16 +223,19 @@ class QuillEditor extends React.Component {
     }
 
     handleChange = (html) => {
-        console.log('html', html)
         // https://youtu.be/BbR-QCoKngE
         // https://www.youtube.com/embed/ZwKhufmMxko
         // https://tv.naver.com/v/9176888
         // renderToStaticMarkup(ReactHtmlParser(html, options));
+        const quill = this.reactQuillRef.getEditor();
+        let fileList = quill.getContents().ops.filter(i => i.insert && i.insert.image).map(i => i.insert.image.src)
 
         this.setState({
-            editorHtml: html
+            editorHtml: html,
+            files: fileList
         }, () => {
             this.props.onEditorChange(this.state.editorHtml);
+            this.props.onFilesChange(this.state.files);
         });
     };
 
@@ -239,13 +244,13 @@ class QuillEditor extends React.Component {
         this.inputOpenImageRef.current.click();
     };
 
-    videoHandler = () => {
-        this.inputOpenVideoRef.current.click();
-    };
+    // videoHandler = () => {
+    //     this.inputOpenVideoRef.current.click();
+    // };
 
-    fileHandler = () => {
-        this.inputOpenFileRef.current.click();
-    };
+    // fileHandler = () => {
+    //     this.inputOpenFileRef.current.click();
+    // };
 
 
     insertImage = (e) => {
@@ -254,7 +259,6 @@ class QuillEditor extends React.Component {
 
         if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
             const file = e.currentTarget.files[0];
-            console.log(file)
 
             let formData = new FormData();
             const config = {
@@ -273,15 +277,16 @@ class QuillEditor extends React.Component {
                         let position = range ? range.index : 0;
 
                         //먼저 노드 서버에다가 이미지를 넣은 다음에   여기 아래에 src에다가 그걸 넣으면 그게 
-                        //이미지 블롯으로 가서  크리에이트가 이미지를 형성 하며 그걸 발류에서     src 랑 alt 를 가져간후에  editorHTML에 다가 넣는다.
+                        //이미지 블롯으로 가서  크리에이트가 태그를 editorHTML에 다가 넣고 img 태그에 value가 src alt 값을 넣어서 이미지 만드는 듯? 확실하진 않음
+                        //inserEmbed가 imageBlot 사용하는 함수 ("image"가 blotName이었음)
                         quill.insertEmbed(position, "image", { src: "http://localhost:5000/" + response.data.url, alt: response.data.fileName });
                         quill.setSelection(position + 1);
 
-                        if (this._isMounted) {
-                            this.setState({
-                                files: [...this.state.files, file]
-                            }, () => { this.props.onFilesChange(this.state.files) });
-                        }
+                        // if (this._isMounted) {
+                        //     this.setState({
+                        //         files: [...this.state.files, file]
+                        //     }, () => { this.props.onFilesChange(this.state.files) });
+                        // }
                     } else {
                         return alert('failed to upload file')
                     }
@@ -289,78 +294,78 @@ class QuillEditor extends React.Component {
         }
     };
 
-    insertVideo = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+    // insertVideo = (e) => {
+    //     e.stopPropagation();
+    //     e.preventDefault();
 
-        if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
-            const file = e.currentTarget.files[0];
+    //     if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
+    //         const file = e.currentTarget.files[0];
 
-            let formData = new FormData();
-            const config = {
-                header: { 'content-type': 'multipart/form-data' }
-            }
-            formData.append("file", file);
+    //         let formData = new FormData();
+    //         const config = {
+    //             header: { 'content-type': 'multipart/form-data' }
+    //         }
+    //         formData.append("file", file);
 
-            axios.post('/api/blog/uploadfiles', formData, config)
-                .then(response => {
-                    if (response.data.success) {
+    //         axios.post('/api/blog/uploadfiles', formData, config)
+    //             .then(response => {
+    //                 if (response.data.success) {
 
-                        const quill = this.reactQuillRef.getEditor();
-                        quill.focus();
+    //                     const quill = this.reactQuillRef.getEditor();
+    //                     quill.focus();
 
-                        let range = quill.getSelection();
-                        let position = range ? range.index : 0;
-                        quill.insertEmbed(position, "video", { src: "http://localhost:5000/" + response.data.url, title: response.data.fileName });
-                        quill.setSelection(position + 1);
+    //                     let range = quill.getSelection();
+    //                     let position = range ? range.index : 0;
+    //                     quill.insertEmbed(position, "video", { src: "http://localhost:5000/" + response.data.url, title: response.data.fileName });
+    //                     quill.setSelection(position + 1);
 
-                        if (this._isMounted) {
-                            this.setState({
-                                files: [...this.state.files, file]
-                            }, () => { this.props.onFilesChange(this.state.files) });
-                        }
-                    } else {
-                        return alert('failed to upload file')
-                    }
-                })
-        }
-    }
+    //                     if (this._isMounted) {
+    //                         this.setState({
+    //                             files: [...this.state.files, file]
+    //                         }, () => { this.props.onFilesChange(this.state.files) });
+    //                     }
+    //                 } else {
+    //                     return alert('failed to upload file')
+    //                 }
+    //             })
+    //     }
+    // }
 
-    insertFile = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+    // insertFile = (e) => {
+    //     e.stopPropagation();
+    //     e.preventDefault();
 
-        if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
-            const file = e.currentTarget.files[0];
-            console.log(file);
+    //     if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
+    //         const file = e.currentTarget.files[0];
+    //         console.log(file);
 
-            let formData = new FormData();
-            const config = {
-                header: { 'content-type': 'multipart/form-data' }
-            }
-            formData.append("file", file);
+    //         let formData = new FormData();
+    //         const config = {
+    //             header: { 'content-type': 'multipart/form-data' }
+    //         }
+    //         formData.append("file", file);
 
-            axios.post('/api/blog/uploadfiles', formData, config)
-                .then(response => {
-                    if (response.data.success) {
+    //         axios.post('/api/blog/uploadfiles', formData, config)
+    //             .then(response => {
+    //                 if (response.data.success) {
 
-                        const quill = this.reactQuillRef.getEditor();
-                        quill.focus();
+    //                     const quill = this.reactQuillRef.getEditor();
+    //                     quill.focus();
 
-                        let range = quill.getSelection();
-                        let position = range ? range.index : 0;
-                        quill.insertEmbed(position, "file", response.data.fileName);
-                        quill.setSelection(position + 1);
+    //                     let range = quill.getSelection();
+    //                     let position = range ? range.index : 0;
+    //                     quill.insertEmbed(position, "file", response.data.fileName);
+    //                     quill.setSelection(position + 1);
 
-                        if (this._isMounted) {
-                            this.setState({
-                                files: [...this.state.files, file]
-                            }, () => { this.props.onFilesChange(this.state.files) });
-                        }
-                    };
-                })
-        }
-    };
+    //                     if (this._isMounted) {
+    //                         this.setState({
+    //                             files: [...this.state.files, file]
+    //                         }, () => { this.props.onFilesChange(this.state.files) });
+    //                     }
+    //                 };
+    //             })
+    //     }
+    // };
 
     render() {
         return (
@@ -376,11 +381,11 @@ class QuillEditor extends React.Component {
                     <button className="ql-underline" />
                     <button className="ql-strike" />
                     <button className="ql-insertImage">
-                        I
+                        img
                     </button>
-                    <button className="ql-insertVideo">
+                    {/* <button className="ql-insertVideo">
                         V
-                    </button>
+                    </button> */}
                     
                     <button className="ql-link" />
                     <button className="ql-code-block" />
@@ -401,8 +406,8 @@ class QuillEditor extends React.Component {
                     placeholder={this.props.placeholder}
                 />
                 <input type="file" accept="image/*" ref={this.inputOpenImageRef} style={{ display: "none" }} onChange={this.insertImage} />
-                <input type="file" accept="video/*" ref={this.inputOpenVideoRef} style={{ display: "none" }} onChange={this.insertVideo} />
-                <input type="file" accept="*" ref={this.inputOpenFileRef} style={{ display: "none" }} onChange={this.insertFile} />
+                {/* <input type="file" accept="video/*" ref={this.inputOpenVideoRef} style={{ display: "none" }} onChange={this.insertVideo} />
+                <input type="file" accept="*" ref={this.inputOpenFileRef} style={{ display: "none" }} onChange={this.insertFile} /> */}
             </div>
         )
     }
@@ -414,8 +419,7 @@ class QuillEditor extends React.Component {
             //id ="toorbar"는  그 위에 B I U S I V F P 이거 있는 곳이다. 
             handlers: {
                 insertImage: this.imageHandler,
-                insertVideo: this.videoHandler,
-                
+                // insertVideo: this.videoHandler,
             }
         },
 

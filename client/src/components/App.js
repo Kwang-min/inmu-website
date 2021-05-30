@@ -17,6 +17,7 @@ import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage';
 import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage';
 import BoardMainPage from './views/BoardMainPage/BoardMainPage';
 import BoardCreatePage from './views/BoardCreatePage/BoardCreatePage';
+import BoardUpdatePage from './views/BoardUpdatePage/BoardUpdatePage';
 import BoardDetailPage from './views/BoardDetailPage/BoardDetailPage';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route exact path="/video/:videoId" component = {Auth(VideoDetailPage, null)} />
               <Route exact path="/boardList" component = {Auth(BoardMainPage, null)} />
               <Route exact path="/board/create" component = {Auth(BoardCreatePage, true)} />
+              <Route exact path="/board/update/:postId" component = {Auth(BoardUpdatePage, true)} />
               <Route exact path="/board/post/:postId" component = {Auth(BoardDetailPage, null)} />
             </Switch>
           </div>

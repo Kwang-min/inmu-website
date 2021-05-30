@@ -25,6 +25,7 @@ function BoardCreatePage(props) {
 
     const onFilesChange = (files) => {
         setFiles(files)
+        
     }
 
     const onSubmit = (event) => {
@@ -39,9 +40,10 @@ function BoardCreatePage(props) {
         const variables = {
             title: postTitle,
             content: content,
-            writer: user.userData._id
+            writer: user.userData._id,
+            files: files
         }
-
+        console.log('variables',variables)
         
 
         axios.post('/api/blog/createPost', variables )

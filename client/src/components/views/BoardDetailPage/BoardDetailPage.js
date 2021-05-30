@@ -4,6 +4,7 @@ import moment from 'moment'
 import { useSelector } from "react-redux";
 import { withRouter } from 'react-router-dom'
 import { Button } from "antd"
+import { Link } from "react-router-dom";
 
 
 function BoardDetailPage(props) {
@@ -64,7 +65,12 @@ function BoardDetailPage(props) {
 				</div>
 				<div dangerouslySetInnerHTML={{ __html: post.content }} />
 				{user.userData._id == post.writer._id &&
+					<>
 					<Button onClick={deleteHandler}>글 삭제</Button>
+					<Link to={`/board/update/${postId}`}>
+						<Button>글 수정</Button>
+					</Link>
+					</>
 				}
 
 			</div>

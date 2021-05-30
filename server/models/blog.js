@@ -12,6 +12,9 @@ const blogSchema = mongoose.Schema({
     writer: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    files: {
+        type: Array
     }
 
 }, { timestamps: true })
