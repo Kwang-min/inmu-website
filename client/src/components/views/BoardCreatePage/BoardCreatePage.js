@@ -54,6 +54,9 @@ function BoardCreatePage(props) {
                 setTimeout(() => {
                     props.history.push('/boardList')
                 }, 1000);
+            } else {
+                alert('오류가 났습니다')
+                props.history.push('/boardList')
             }
             
         })

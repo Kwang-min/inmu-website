@@ -202,10 +202,17 @@ class QuillEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : "",
-            files: [],
-        };
+        if(this.props.existing) {
+            this.state = {
+                editorHtml: this.props.existing,
+                files: [],
+            };
+        } else {
+            this.state = {
+                editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : "",
+                files: [],
+            };
+        }
 
         this.reactQuillRef = null;
 
