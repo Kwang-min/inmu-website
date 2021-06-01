@@ -29,9 +29,7 @@ function BoardUpdatePage(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setContent("");
-    setPostTitle("");
-
+  
     if (user.userData && !user.userData.isAuth) {
       return alert('Please log in!')
     }
@@ -72,6 +70,8 @@ function BoardUpdatePage(props) {
 
           setPost(response.data.post)
           setPostTitle(response.data.post.title)
+          setContent(response.data.post.content)
+          setFiles(response.data.post.files)
         } else {
           alert('failed to bring post data')
         }
@@ -83,7 +83,7 @@ function BoardUpdatePage(props) {
     return (
       <div>
         {user.userData._id == post.writer._id &&
-          <Form >
+          <Form onSubmit={onSubmit} >
             <Input
               onChange={onTitleChange}
               value={postTitle}
