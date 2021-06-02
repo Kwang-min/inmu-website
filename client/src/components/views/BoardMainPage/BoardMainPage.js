@@ -2,9 +2,13 @@ import React,{ useEffect, useState } from 'react'
 import axios from 'axios';
 import './BoardMainPage.css'
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Button } from 'antd'
 
 function BoardMainPage() {
     const [blogs, setBlogs] = useState([])
+
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
         axios.get('api/blog/getBlogs') 
@@ -46,6 +50,12 @@ function BoardMainPage() {
             <div className={'postContainer'}>
                 {renderCards}
             </div>
+            {user.userData._id &&
+                <Link to={`/board/create`}>
+                    <Button>새 글 쓰기</Button>
+                </Link>
+            }
+            
         </div>
     )
 }

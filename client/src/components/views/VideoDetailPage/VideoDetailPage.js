@@ -4,6 +4,7 @@ import Axios from 'axios'
 import Comment from './Sections/Comment'
 import LikeDislikes from './Sections/LikeDislikes'
 import { withRouter } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { getComment } from '../../../_actions/comment_actions';
@@ -65,12 +66,15 @@ function VideoDetailPage(props) {
 
 
 	if (VideoDetail.writer) {
-
+		let updateButton;
 		let deleteButton;
 		if (user.userData._id == VideoDetail.writer._id) {
-			deleteButton = <Button onClick={deleteHandler}>게시물 삭제</Button>
+			deleteButton = <Button onClick={deleteHandler}>삭제</Button>
+			updateButton = <Link to={`/video/update/${videoId}`}>
+			<Button>수정</Button>
+			</Link>
 		} else {
-
+			
 		}
 
 		return (
@@ -81,7 +85,7 @@ function VideoDetailPage(props) {
 
 						<List.Item
 							actions={[<LikeDislikes video userId={user.userData._id}
-								videoId={videoId} />, deleteButton]}
+								videoId={videoId} />, updateButton, deleteButton]}
 						>
 							<List.Item.Meta
 								avatar={<Avatar src={VideoDetail.writer.image} />}

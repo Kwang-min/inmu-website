@@ -61,15 +61,15 @@ function BoardDetailPage(props) {
 				<h3>작성자 {post.writer.name}</h3>
 				<br />
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					<h2>{createdAt}</h2>
+					<h3>{createdAt}</h3>
 				</div>
 				<div dangerouslySetInnerHTML={{ __html: post.content }} />
 				{user.userData._id == post.writer._id &&
 					<>
-					<Button onClick={deleteHandler}>글 삭제</Button>
 					<Link to={`/board/update/${postId}`}>
 						<Button>글 수정</Button>
 					</Link>
+					<Button onClick={deleteHandler}>글 삭제</Button>
 					</>
 				}
 

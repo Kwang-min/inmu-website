@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import moment from 'moment'
 import './VideoMainPage.css'
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Button } from 'antd'
 
 function VideoMainPage() {
+
+    const user = useSelector(state => state.user);
 
     const [Video, setVideo] = useState([])
 
@@ -65,6 +70,12 @@ function VideoMainPage() {
                 {renderCards}
 
             </div>
+            {user.userData._id &&
+                <Link to={`/video/upload`}>
+                    <Button>새 영상 업로드</Button>
+                </Link>
+            }
+            
         </div>
     )
 }
