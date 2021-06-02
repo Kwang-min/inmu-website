@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useState, useRef } from 'react'
 import axios from 'axios';
 import { Button, Form, Input} from 'antd';
 import QuillEditor from '../../editor/QuillEditor';
@@ -12,7 +12,9 @@ function BoardCreatePage(props) {
 
     const [postTitle, setPostTitle] = useState("")
     const [content, setContent] = useState("");
-    const [files, setFiles] = useState([]);
+    // const [files, setFiles] = useState([]);
+
+    const editorRef = useRef();
 
     const onTitleChange = (e) => {
         setPostTitle(e.currentTarget.value)
@@ -23,25 +25,26 @@ function BoardCreatePage(props) {
         
     }
 
-    const onFilesChange = (files) => {
-        setFiles(files)
+    // const onFilesChange = (files) => {
+    //     setFiles(files)
         
-    }
+    // }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        setContent("");
-        setPostTitle("");
 
         if( user.userData && !user.userData.isAuth) {
             return alert('Please log in!')
         }
 
+        //submit시에 퀼 에디터 안의 이미지 목록을 가져오는 함수 호출
+        const fileList = editorRef.current.getFileList()
+
         const variables = {
             title: postTitle,
             content: content,
             writer: user.userData._id,
-            files: files
+            files: fileList
         }
         console.log('variables',variables)
         
@@ -74,9 +77,10 @@ function BoardCreatePage(props) {
                         value={postTitle}
                     />
                     <QuillEditor
+                    ref={editorRef}
                     placeholder={"Start Posting Something"}
                     onEditorChange={onEditorChange}
-                    onFilesChange={onFilesChange}
+                    // onFilesChange={onFilesChange}
                     />
                     <div style={{ textAlign: 'center', margin: '2rem', }}>
                     <Button type="primary" size="large" onClick={onSubmit}>

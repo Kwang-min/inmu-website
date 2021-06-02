@@ -73,7 +73,7 @@ class ImageBlot extends BlockEmbed {
         const imgTag = super.create(); 
         imgTag.setAttribute('src', value.src);
         imgTag.setAttribute('alt', value.alt);
-        imgTag.setAttribute('width', '100%');
+        imgTag.setAttribute('width', '40%');
         return imgTag;
     }
 
@@ -234,17 +234,24 @@ class QuillEditor extends React.Component {
         // https://www.youtube.com/embed/ZwKhufmMxko
         // https://tv.naver.com/v/9176888
         // renderToStaticMarkup(ReactHtmlParser(html, options));
-        const quill = this.reactQuillRef.getEditor();
-        let fileList = quill.getContents().ops.filter(i => i.insert && i.insert.image).map(i => i.insert.image.src)
+        
 
         this.setState({
             editorHtml: html,
-            files: fileList
+            
         }, () => {
             this.props.onEditorChange(this.state.editorHtml);
-            this.props.onFilesChange(this.state.files);
+            
         });
     };
+
+    getFileList = () => {
+        console.log('hi')
+        const quill = this.reactQuillRef.getEditor();
+        let fileList = quill.getContents().ops.filter(i => i.insert && i.insert.image).map(i => i.insert.image.src)
+        console.log('fileList', fileList)
+        return fileList;
+    }
 
     // I V F P들을  눌렀을떄 insertImage: this.imageHandler로 가서  거기서 inputOpenImageRef를 클릭 시킨다. 
     imageHandler = () => {

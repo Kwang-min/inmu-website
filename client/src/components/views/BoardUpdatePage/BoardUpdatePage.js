@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from "react-redux";
 import QuillEditor from '../../editor/QuillEditor';
 import { Button, Form, Input } from 'antd';
@@ -11,7 +11,9 @@ function BoardUpdatePage(props) {
   const [post, setPost] = useState([])
   const [postTitle, setPostTitle] = useState("")
   const [content, setContent] = useState("");
-  const [files, setFiles] = useState([]);
+  // const [files, setFiles] = useState([]);
+
+  const editorRef = useRef();
 
   const onTitleChange = (e) => {
     setPostTitle(e.currentTarget.value)
@@ -22,24 +24,21 @@ function BoardUpdatePage(props) {
 
   }
 
-  const onFilesChange = (files) => {
-    setFiles(files)
-
-  }
-
   const onSubmit = (event) => {
     event.preventDefault();
   
     if (user.userData && !user.userData.isAuth) {
       return alert('Please log in!')
     }
+    //submit시에 퀼 에디터 안의 이미지 목록을 가져오는 함수 호출
+    const fileList = editorRef.current.getFileList()
 
     const variables = {
       postId: postId,
       title: postTitle,
       content: content,
       writer: user.userData._id,
-      files: files
+      files: fileList
     }
     console.log('variables', variables)
 
@@ -71,7 +70,7 @@ function BoardUpdatePage(props) {
           setPost(response.data.post)
           setPostTitle(response.data.post.title)
           setContent(response.data.post.content)
-          setFiles(response.data.post.files)
+          // setFiles(response.data.post.files)
         } else {
           alert('failed to bring post data')
         }
@@ -89,10 +88,11 @@ function BoardUpdatePage(props) {
               value={postTitle}
             />
             <QuillEditor
+              ref={editorRef}
               placeholder={"Start Posting Something"}
               existing={post.content}
               onEditorChange={onEditorChange}
-              onFilesChange={onFilesChange}
+              // onFilesChange={onFilesChange}
             />
             <div style={{ textAlign: 'center', margin: '2rem', }}>
               <Button type="primary" size="large" onClick={onSubmit}>
