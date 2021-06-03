@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "backend": "nodemon server/index.js",
+    "backend": "pm2 start server/index.js",
     "frontend": "npm run start --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "dev": "concurrently \"npm run backend\" \"pm2 start --name inmu-front npm -- start --prefix client\""
   },
   "author": "",
   "license": "ISC",
