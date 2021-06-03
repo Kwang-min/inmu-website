@@ -38,7 +38,7 @@ function VideoMainPage() {
                     
                     <div className={'video_thumbnail'} style={{ position: 'relative' }}>
                         <a href={`/video/${video._id}`} >
-                        <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:5000/${video.thumbnail}`} />
+                        <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:8000/${video.thumbnail}`} />
                         <div className=" duration" >
                             <span>{minutes} : {seconds}</span>
                         </div>
@@ -70,7 +70,7 @@ function VideoMainPage() {
                 {renderCards}
 
             </div>
-            {user.userData._id &&
+            {user.userData&&user.userData._id &&
                 <Link to={`/video/upload`}>
                     <Button>새 영상 업로드</Button>
                 </Link>

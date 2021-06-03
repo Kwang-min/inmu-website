@@ -50,7 +50,7 @@ function BoardMainPage() {
             <div className={'postContainer'}>
                 {renderCards}
             </div>
-            {user.userData._id &&
+            {user.userData&&user.userData._id &&
                 <Link to={`/board/create`}>
                     <Button>새 글 쓰기</Button>
                 </Link>
