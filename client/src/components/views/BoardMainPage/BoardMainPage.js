@@ -31,7 +31,7 @@ function BoardMainPage() {
                     </div>
                     <div className={'metadata'}>
                         <img 
-                        src={blog.writer.image ? blog.writer.image : 'https://i.imgur.com/hOvczEj.png'} 
+                        src={blog.writer.image ? blog.writer.image : ''} 
                         className={'user_avatar'}
                         />
                         <span>{blog.writer.name}</span>
