@@ -47,10 +47,7 @@ function BoardUpdatePage(props) {
       .then(response => {
         if (response.data.success) {
           alert('successfully updated!');
-
-          setTimeout(() => {
-            props.history.push('/boardList')
-          }, 1000);
+          props.history.push('/boardList')
         } else {
           alert('오류가 났습니다')
           props.history.push('/boardList')

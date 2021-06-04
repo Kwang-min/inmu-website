@@ -37,10 +37,7 @@ function BoardDetailPage(props) {
 				.then(response => {
 					if (response.data.success) {
 						alert('글 삭제 성공');
-
-						setTimeout(() => {
-							props.history.push('/boardList')
-						}, 1000);
+						props.history.push('/boardList')
 
 					} else {
 						alert('글 삭제를 실패했습니다')
@@ -64,7 +61,7 @@ function BoardDetailPage(props) {
 					<h3>{createdAt}</h3>
 				</div>
 				<div dangerouslySetInnerHTML={{ __html: post.content }} />
-				{user.userData._id == post.writer._id &&
+				{user.userData && user.userData._id == post.writer._id &&
 					<>
 					<Link to={`/board/update/${postId}`}>
 						<Button>글 수정</Button>

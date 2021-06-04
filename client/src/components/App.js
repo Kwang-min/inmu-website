@@ -15,6 +15,7 @@ import RegisterPage from './views/RegisterPage/RegisterPage';
 import VideoMainPage from './views/VideoMainPage/VideoMainPage';
 import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage';
 import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage';
+import VideoUpdatePage from './views/VideoUpdatePage/VideoUpdatePage';
 import BoardMainPage from './views/BoardMainPage/BoardMainPage';
 import BoardCreatePage from './views/BoardCreatePage/BoardCreatePage';
 import BoardUpdatePage from './views/BoardUpdatePage/BoardUpdatePage';
@@ -34,6 +35,7 @@ function App() {
               <Route exact path="/register" component = {Auth(RegisterPage, false)} />
               <Route exact path="/videoList" component = {Auth(VideoMainPage, null)} />
               <Route exact path="/video/upload" component = {Auth(VideoUploadPage, true)} />
+              <Route exact path="/video/update/:videoId" component = {Auth(VideoUpdatePage, true)} />
               <Route exact path="/video/:videoId" component = {Auth(VideoDetailPage, null)} />
               <Route exact path="/boardList" component = {Auth(BoardMainPage, null)} />
               <Route exact path="/board/create" component = {Auth(BoardCreatePage, true)} />

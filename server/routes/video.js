@@ -48,6 +48,19 @@ router.post('/uploadVideo', (req, res) => {
 
 })
 
+router.post('/updateVideo', (req, res) => {
+
+	Video.findOneAndUpdate({ "_id": req.body.videoId },
+					{
+						title: req.body.title,
+						description: req.body.description,
+					}
+					, (err, doc) => {
+						if (err) return res.json({ success: false, err })
+						res.status(200).json({ success: true })
+					})
+})
+
 router.post('/deleteVideo', (req, res) => {
 	// 게시글 db에서 삭제, 썸네일 삭제, 비디오 파일 삭제, 댓글 모조리 삭제 
 	async.waterfall(

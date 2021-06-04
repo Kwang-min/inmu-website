@@ -50,10 +50,7 @@ function VideoDetailPage(props) {
 				.then(response => {
 					if (response.data.success) {
 						alert('게시물 삭제 성공');
-
-						setTimeout(() => {
-							props.history.push('/videoList')
-						}, 1000);
+						props.history.push('/videoList')
 
 					} else {
 						alert('게시물 삭제를 실패했습니다')
@@ -68,7 +65,7 @@ function VideoDetailPage(props) {
 	if (VideoDetail.writer) {
 		let updateButton;
 		let deleteButton;
-		if (user.userData._id == VideoDetail.writer._id) {
+		if (user.userData && user.userData._id == VideoDetail.writer._id) {
 			deleteButton = <Button onClick={deleteHandler}>삭제</Button>
 			updateButton = <Link to={`/video/update/${videoId}`}>
 			<Button>수정</Button>
@@ -84,8 +81,7 @@ function VideoDetailPage(props) {
 						<video style={{ width: '100%' }} src={`http://localhost:8000/${VideoDetail.filePath}`} controls />
 
 						<List.Item
-							actions={[<LikeDislikes video userId={user.userData._id}
-								videoId={videoId} />, updateButton, deleteButton]}
+							actions={[ updateButton, deleteButton]}
 						>
 							<List.Item.Meta
 								avatar={<Avatar src={VideoDetail.writer.image} />}

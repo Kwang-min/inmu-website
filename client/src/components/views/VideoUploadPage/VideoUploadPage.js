@@ -10,25 +10,11 @@ import { useSelector } from 'react-redux'
 const { TextArea } = Input;
 const { Title } = Typography;
 
-const PrivateOptions = [
-    { value: 1, label: "공개" },
-    { value: 0, label: "비공개" },
-]
-
-const CategoryOptions = [
-    { value: 0, label: "보컬" },
-    { value: 1, label: "기타" },
-    { value: 2, label: "피아노" },
-    { value: 3, label: "드럼" }
-]
-
 function VideoUploadPage(props) {
 
     const user = useSelector(state => state.user);
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
-    const [Private, setPrivate] = useState(0)
-    const [Category, setCategory] = useState("보컬")
     const [FilePath, setFilePath] = useState("")
     const [Duration, setDuration] = useState("")
     const [ThumbnailPath, setThumbnailPath] = useState("")
@@ -39,12 +25,7 @@ function VideoUploadPage(props) {
     const onDescriptionChange = (e) => {
         setDescription(e.currentTarget.value)
     }
-    const onPrivateChange = (e) => {
-        setPrivate(e.currentTarget.value)
-    }
-    const onCategoryChange = (e) => {
-        setCategory(e.currentTarget.value)
-    }
+
     const onDrop = (files) => {
 
         let formData = new FormData();
@@ -93,9 +74,7 @@ function VideoUploadPage(props) {
             writer: user.userData._id,
             title: VideoTitle,
             description: Description,
-            privacy: Private,
             filePath: FilePath,
-            category: Category,
             duration: Duration,
             thumbnail: ThumbnailPath,
 
@@ -105,9 +84,7 @@ function VideoUploadPage(props) {
             .then(response => {
                 if (response.data.success) {
                     alert('성공적으로 업로드를 했습니다')
-                    setTimeout(() => {
-                        props.history.push('/videoList')
-                    }, 3000);
+                    props.history.push('/videoList')
 
                 } else {
                     alert('비디오 업로드에 실패했습니다')
@@ -163,26 +140,7 @@ function VideoUploadPage(props) {
                         onChange={onDescriptionChange}
                         value={Description}
                     />
-                    <br />
-                    <br />
 
-                    <select onChange={onPrivateChange}>
-
-                        {PrivateOptions.map((item, index) => (
-                            <option key={index} value={item.value}>{item.label}</option>
-                        ))}
-
-                    </select>
-
-                    <br />
-                    <br />
-
-                    <select onChange={onCategoryChange}>
-                        {CategoryOptions.map((item, index) => (
-                                <option key={index} value={item.value}>{item.label}</option>
-                        ))}
-
-                    </select>
 
                     <br />
                     <br />
