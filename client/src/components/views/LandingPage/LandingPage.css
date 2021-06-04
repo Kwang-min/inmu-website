@@ -1,0 +1,33 @@
+
+.carousel_main{
+  width: 100%;
+	height: 60vh;
+	background-color: black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel_cheonan{
+  width: 100%;
+	height: 60vh;
+	background-color: #F0306B;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text_container {
+  width: 40%;
+}
+
+.img_container {
+ width: 40%;
+}
+
+.img_container > img {
+  width: 100%;
+  height: 100%;  
+}
+
+@media screen and (max-width: 768px) {
+  
+}

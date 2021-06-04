@@ -149,6 +149,7 @@ function VideoUploadPage(props) {
                 </div>
 
                 <br />
+                <p style={{ color: 'grey'}}>업로드를 한 후 오른쪽에 썸네일이 생길 떼까지 기다려주세요.</p>
                 <br />
                     <label>Title</label>
                     <Input
