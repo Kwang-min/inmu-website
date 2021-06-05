@@ -293,7 +293,7 @@ class QuillEditor extends React.Component {
                         //먼저 노드 서버에다가 이미지를 넣은 다음에   여기 아래에 src에다가 그걸 넣으면 그게 
                         //이미지 블롯으로 가서  크리에이트가 태그를 editorHTML에 다가 넣고 img 태그에 value가 src alt 값을 넣어서 이미지 만드는 듯? 확실하진 않음
                         //inserEmbed가 imageBlot 사용하는 함수 ("image"가 blotName이었음)
-                        quill.insertEmbed(position, "image", { src: "http://localhost:8000/" + response.data.url, alt: response.data.fileName });
+                        quill.insertEmbed(position, "image", { src: "http://152.70.253.13:8000/" + response.data.url, alt: response.data.fileName });
                         quill.setSelection(position + 1);
 
                         // if (this._isMounted) {

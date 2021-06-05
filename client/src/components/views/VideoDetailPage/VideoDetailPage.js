@@ -78,7 +78,7 @@ function VideoDetailPage(props) {
 			<Row gutter={[16, 16]}>
 				<Col lg={18} xs={24}>
 					<div style={{ width: '100%', padding: '3rem 4rem' }}>
-						<video style={{ width: '100%' }} src={`http://localhost:8000/${VideoDetail.filePath}`} controls />
+						<video style={{ width: '100%' }} src={`http://152.70.253.13:8000/${VideoDetail.filePath}`} controls />
 
 						<List.Item
 							actions={[ updateButton, deleteButton]}

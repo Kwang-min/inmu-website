@@ -38,7 +38,7 @@ function VideoMainPage() {
                     
                     <div className={'video_thumbnail'} style={{ position: 'relative' }}>
                         <a href={`/video/${video._id}`} >
-                        <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:8000/${video.thumbnail}`} />
+                        <img style={{ width: '100%' }} alt="thumbnail" src={`http://152.70.253.13:8000/${video.thumbnail}`} />
                         <div className=" duration" >
                             <span>{minutes} : {seconds}</span>
                         </div>
