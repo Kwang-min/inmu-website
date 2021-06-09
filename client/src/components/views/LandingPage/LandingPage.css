@@ -17,6 +17,8 @@
 
 .text_container {
   width: 40%;
+  height: 70%;
+  margin: 30px 0 30px 20px;
 }
 
 .img_container {
@@ -28,6 +30,13 @@
   height: 100%;  
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
   
+  .text_container {
+    width: 100%;
+  }
+  .img_container {
+    display: none;
+  }
+   
 }

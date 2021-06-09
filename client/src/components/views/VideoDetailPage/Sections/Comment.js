@@ -48,7 +48,7 @@ function Comment(props) {
     return (
         <div>
             <br />
-            <p> Replies </p>
+            <p> 댓글 </p>
             <hr />
 
             {/* Comment List */}

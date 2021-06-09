@@ -52,7 +52,7 @@ function BoardMainPage() {
             </div>
             {user.userData&&user.userData._id &&
                 <Link to={`/board/create`}>
-                    <Button>새 글 쓰기</Button>
+                    <Button style={{ marginTop: '30px' }}>새 글 쓰기</Button>
                 </Link>
             }
             

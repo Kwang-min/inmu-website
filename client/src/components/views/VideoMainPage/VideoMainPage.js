@@ -64,7 +64,7 @@ function VideoMainPage() {
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
-            <h2> 연주영상 </h2>
+            <h2> 수강생 연주 </h2>
             <div className={'video_container'}>
 
                 {renderCards}
@@ -72,7 +72,7 @@ function VideoMainPage() {
             </div>
             {user.userData&&user.userData._id &&
                 <Link to={`/video/upload`}>
-                    <Button>새 영상 업로드</Button>
+                    <Button style={{ marginTop: '30px' }}>새 영상 업로드</Button>
                 </Link>
             }
             

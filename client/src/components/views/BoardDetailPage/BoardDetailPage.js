@@ -53,13 +53,10 @@ function BoardDetailPage(props) {
 		const createdAt = moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss")
 
 		return (
-			<div className="postPage" style={{ width: '50%', margin: '3rem auto' }}>
-				<h2>{post.title}</h2>
-				<h3>작성자 {post.writer.name}</h3>
-				<br />
-				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					<h3>{createdAt}</h3>
-				</div>
+			<div className="postPage" style={{ width: '50%', margin: '1rem auto' }}>
+				<h2 style={{ fontWeight: '600'}}>{post.title}</h2>
+				<span>작성자 {post.writer.name} | {createdAt} </span>
+				<br /><br /><hr /><br />
 				<div dangerouslySetInnerHTML={{ __html: post.content }} />
 				{user.userData && user.userData._id == post.writer._id &&
 					<>

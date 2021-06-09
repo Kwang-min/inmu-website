@@ -87,7 +87,7 @@ function SingleComment(props) {
 
     const actions = [
         <LikeDislikes userId={user.userData._id} commentId={props.comment._id} />
-        , <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to </span>
+        , <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> 덧글 달기 </span>
     ]
     return (
         <div>
