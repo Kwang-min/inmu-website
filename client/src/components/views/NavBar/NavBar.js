@@ -32,7 +32,7 @@ function NavBar() {
 					<Link to="/">인생뮤직</Link>
 				</div>
 				<ul ref={navbarMenu} className="navbar__menu">
-					<li><Link to="/">학원소개</Link></li>
+					<li><Link to="/">홈</Link></li>
 					<li><Link to="/videoList">수강생 연주</Link></li>
 					<li><Link to="/boardList">인뮤 소식</Link></li>
 				</ul>
