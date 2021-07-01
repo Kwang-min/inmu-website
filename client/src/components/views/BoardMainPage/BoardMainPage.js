@@ -50,7 +50,7 @@ function BoardMainPage() {
             <div className={'postContainer'}>
                 {renderCards}
             </div>
-            {user.userData&&user.userData._id &&
+            {user.userData&&user.userData.role === 1 &&
                 <Link to={`/board/create`}>
                     <Button style={{ marginTop: '30px' }}>새 글 쓰기</Button>
                 </Link>

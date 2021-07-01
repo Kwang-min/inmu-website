@@ -70,7 +70,7 @@ function VideoMainPage() {
                 {renderCards}
 
             </div>
-            {user.userData&&user.userData._id &&
+            {user.userData&&user.userData.role === 1 &&
                 <Link to={`/video/upload`}>
                     <Button style={{ marginTop: '30px' }}>새 영상 업로드</Button>
                 </Link>
