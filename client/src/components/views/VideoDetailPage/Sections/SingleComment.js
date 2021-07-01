@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd';
-import LikeDislikes from './LikeDislikes';
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { saveComment } from '../../../../_actions/comment_actions';
@@ -86,8 +85,7 @@ function SingleComment(props) {
     }
 
     const actions = [
-        <LikeDislikes userId={user.userData._id} commentId={props.comment._id} />
-        , <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> 덧글 달기 </span>
+        <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> 덧글 달기 </span>
     ]
     return (
         <div>

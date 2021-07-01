@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, List, Avatar, Button } from 'antd'
 import Axios from 'axios'
 import Comment from './Sections/Comment'
-import LikeDislikes from './Sections/LikeDislikes'
 import { withRouter } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
