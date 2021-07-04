@@ -71,7 +71,7 @@ function SingleComment(props) {
     }
 
     let deleteButton;
-    if (props.comment.writer._id === user.userData._id) {
+    if (user.userData && props.comment.writer._id === user.userData._id) {
         if(!props.comment.isDeleted) {
             deleteButton = <span onClick={onClickDelete}> 삭제</span>;
         }
