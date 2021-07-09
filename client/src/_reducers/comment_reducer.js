@@ -1,7 +1,8 @@
 import {
     SAVE_COMMENT,
     GET_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    UPDATE_COMMENT
 
 } from '../_actions/types';
 
@@ -14,6 +15,9 @@ export default function comment (state = {}, action) {
             return { ...state, commentList: action.payload }
             break;
         case DELETE_COMMENT:
+            return { ...state, commentList: action.payload }
+            break;
+        case UPDATE_COMMENT:
             return { ...state, commentList: action.payload }
             break;
         default:

@@ -62,6 +62,25 @@ router.post('/deleteComment', (req, res) => {
 
 })
 
+router.post('/updateComment', (req, res) => {
+  console.log('hoihoihoihoi')
+  Comment.findOneAndUpdate({ "_id": req.body._id },
+    {
+      content: req.body.content
+    }
+    , (err, doc) => {
+      if (err) return res.json({ success: false, err })
+      Comment.find({ "postId": req.body.postId })
+        .populate('writer')
+        .exec((err, comments) => {
+          if (err) return res.status(400).send(err)
+
+          res.status(200).json({ success: true, comments })
+        })
+    })
+
+})
+
 
 module.exports = router;
 
