@@ -121,10 +121,14 @@ function SingleComment(props) {
 
     let commentHtml;
     if(!OpenUpdate) {
-        commentHtml = <span>{content}</span>
+        commentHtml = content;
     } else {
         commentHtml = <form onSubmit={onUpdateSubmit}>
-        <textarea value={UpdateValue} onChange={onUpdateChange}></textarea>
+        <TextArea
+            style={{ width: '100%', borderRadius: '5px' }}
+            onChange={onUpdateChange}
+            value={UpdateValue}
+        />
         <input type="submit" value="수정" onClick={onUpdateSubmit} />
         </form>
     }
@@ -138,27 +142,12 @@ function SingleComment(props) {
 
     return (
         <div>
-            {/* <Comment
-                actions={[...actions, deleteButton, updateButton]}
+            <Comment
+                actions={[...actions]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt />}
-                content={comment}
-            /> */}
-            <div>
-                <div>
-                    <img
-                        src={props.comment.writer.image}
-                    />
-                    <span>{props.comment.writer.name}</span>
-                </div>
-                <div>
-                    {commentHtml}
-                </div>
-                <div>
-                    {actions}
-                </div>
-            </div>
-
+                content={commentHtml}
+            />
             {OpenReply &&
                 <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                     <TextArea
